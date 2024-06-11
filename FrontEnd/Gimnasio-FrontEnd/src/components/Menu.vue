@@ -154,15 +154,6 @@
               </RouterLink>
             </li>
             <li>
-              <RouterLink to="/programas_saludables">
-                <a
-                  href="#"
-                  class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                  >Programas saludables</a
-                >
-              </RouterLink>
-            </li>
-            <li>
               <RouterLink to="/rutinas_ejercicios">
                 <a
                   href="#"
@@ -172,11 +163,20 @@
               </RouterLink>
             </li>
             <li>
+              <RouterLink to="/programas_saludables">
+                <a
+                  href="#"
+                  class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                  >Programas saludables</a
+                >
+              </RouterLink>
+            </li>
+            <li>
               <RouterLink to="/detalles_programas">
                 <a
                   href="#"
                   class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                  >Detalle programas</a
+                  >Detalles de programas</a
                 >
               </RouterLink>
             </li>

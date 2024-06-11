@@ -4,6 +4,7 @@ import RegisterUser from '@/components/RegisterUser.vue'
 import  Home from '@/components/Home.vue'
 import Menu from '@/components/Menu.vue'
 import Persona from '@/components/Persona.vue'
+import ListaPersonas from '@/components/ListaPersonas.vue'
 import Ejercicio from '@/components/Ejercicio.vue'
 import Rutina from '@/components/Rutina.vue'
 import ProgramaSaludable from '@/components/ProgramaSaludable.vue'
@@ -28,7 +29,7 @@ const router = createRouter({
       name: 'home',
       component: Menu,
       children: [
-        {path: '/personas', name: 'personas', component: Persona},
+        {path: '/personas', name: 'personas', component: ListaPersonas},
         {path: '/ejercicios', name: 'ejercicios', component: Ejercicio},
         {path: '/rutinas', name: 'rutinas', component: Rutina},
         {path: '/programas_saludables', name: 'programas_saludables', component: ProgramaSaludable},
