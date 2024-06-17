@@ -532,4 +532,17 @@
     </div>
     <router-view />
   </div>
+  <div class="">
+    <PiePagina></PiePagina>
+  </div>
 </template>
+
+<script>
+import PiePagina from "./PiePagina.vue";
+
+export default {
+  components: {
+    PiePagina,
+  },
+};
+</script>
