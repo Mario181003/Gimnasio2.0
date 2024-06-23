@@ -532,9 +532,9 @@
     </div>
     <router-view />
   </div>
-  <!-- <div class="">
+  <div class="fixed bottom-0 left-0 right-0">
     <PiePagina></PiePagina>
-  </div> -->
+  </div>
 </template>
 
 <script>
