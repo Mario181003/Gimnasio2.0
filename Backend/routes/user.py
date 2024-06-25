@@ -13,6 +13,14 @@ class model_user(BaseModel):
     created_at: datetime = datetime.now()
     estatus:bool=False
 
+class model_persona(BaseModel):
+    id: str
+    nombre: str
+    apellido_pat: str
+    apellido_mat: str
+    created_at: datetime = datetime.now()
+    estatus:bool=False
+
 @user.get("/")
 
 def bienvenido():
@@ -42,3 +50,29 @@ def delete_usuario(user_id: str):
         if user.id == user_id:
             del users[index]
             return {"message": "Usuario eliminado"}
+
+
+@user.get("/personas")
+
+def get_personas():
+    return personas
+
+@user.post('/personas')
+def save_personas(insert_personas:model_persona):
+    personas.append(insert_personas)
+    #print(insert_users)
+    return "Datos guardados"
+
+@user.put('/personas/{persona_id}')
+def update_persona(persona_id: str, updated_persona:model_persona):
+    for index, persona in enumerate(personas):
+        if persona.id == persona_id:
+            personas[index] = updated_persona
+            return {"message": "Datos actualizados"}
+        
+@user.delete('/personas/{persona_id}')
+def delete_persona(persona_id: str):
+    for index, persona in enumerate(personas):
+        if persona.id == persona_id:
+            del personas[index]
+            return {"message": "Persona eliminado"}
