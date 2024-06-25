@@ -18,6 +18,8 @@ class model_persona(BaseModel):
     nombre: str
     apellido_pat: str
     apellido_mat: str
+    direccion: str
+    telefono: str
     created_at: datetime = datetime.now()
     estatus:bool=False
 
