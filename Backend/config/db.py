@@ -1,7 +1,16 @@
-from sqlalchemy import created_engine, MetaData
+from sqlalchemy import created_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
-engine = created_engine("mysql+pymysql://root:1234@localhost:3307/test.db")
+DATABASE_URL = ("mysql+pymysql://root:1234@localhost:3307/test")
 
-meta = MetaData()
+engine = created_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocomit=False, autoflush=False, bind=engine)
+Base = declarative_base()
 
-conn = engine.connect()
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
