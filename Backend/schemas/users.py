@@ -5,7 +5,7 @@ from datetime import datetime
 class UserBase(BaseModel):
     usuario: str
     password: str
-    created_at: datetime,
+    created_at: datetime
     estatus: bool
     Id_persona: int
 
@@ -15,7 +15,7 @@ class UserCreate(UserBase):
 class UserUpdate(UserBase):
     pass
 
-class User(UserBase)
+class User(UserBase):
 
     class Config:
         orm_mode = True

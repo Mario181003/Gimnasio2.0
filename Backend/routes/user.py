@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPExeption, Depends
 from sqlalchemy.orm import Session
 from crytography.fernet import Fernet
-from crud.users, config.db, schemas.users, mnodels.users
+from cruds.users, config.db, schemas.users, mnodels.users
 import routes.user
 from typing import List
 
