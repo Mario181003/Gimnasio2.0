@@ -16,6 +16,7 @@ class UserUpdate(UserBase):
     pass
 
 class User(UserBase):
-
+    id: int
+    #owner_id: int clave foranea
     class Config:
         orm_mode = True
