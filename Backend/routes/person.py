@@ -1,70 +1,52 @@
-from fastapi import APIRouter
-from pydantic import BaseModel
-from datetime import datetime
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
+from cryptography.fernet import Fernet
+import cruds.persons, config.db, schemas.persons, models.persons
+from typing import List
+
+key=Fernet.generate_key()
+f = Fernet(key)
 
 person = APIRouter()
-persons = []
 
-#personsModel
-class model_person(BaseModel):
-    id:str
-    nombre:str
-    primer_apellido: str
-    segundo_apellido: str
-    direccion: str
-    telefono: str
-    correo: str
-    sangre: str
-    fecha_nacimiento: datetime
-    created_at:datetime = datetime.now()
-    estatus:bool=False
+models.persons.Base.metadata.create_all(bind=config.db.engine)
 
-@person.get('/')
+def get_db():
+    db = config.db.SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-def bienvenida():
-    return "Bienvenido al sistema de apis"
+@person.get("/persons/", response_model=List[schemas.persons.Person], tags=["Personas"])
+def read_persons(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    db_persons= cruds.persons.get_persons(db=db, skip=skip, limit=limit)
+    return db_persons
 
-@person.get('/persons', tags=["Personas"])
+@person.post("/person/", response_model=schemas.persons.Person, tags=["Personas"])
+def create_person(person: schemas.persons.PersonCreate, db: Session = Depends(get_db)):
+    db_person = cruds.persons.get_person_by_nombre(db, person=person.Nombre)
+    if db_person:
+        raise HTTPException(status_code=400, detail="Usuario existente intenta nuevamente")
+    return cruds.persons.create_person(db=db, person=person)
 
-def get_personas():
-    return persons
+@person.post("/person/{id}", response_model=schemas.persons.Person, tags=["Personas"])
+def read_user(id: int, db: Session = Depends(get_db)):
+    db_person= cruds.persons.get_person(db=db, id=id)
+    if db_person is None:
+        raise HTTPException(status_code=404, detail="Persona no encontrada")
+    return db_person
 
-@person.post('/persons', tags=["Personas"] )
+@person.put("/person/{id}", response_model=schemas.persons.Person, tags=["Personas"])
+def update_person(id: int, person: schemas.persons.PersonUpdate, db: Session = Depends(get_db)):
+    db_person = cruds.persons.update_person(db=db, id=id, person=person)
+    if db_person is None:
+        raise HTTPException(status_code=404, detail="Persona no existe, no actualizado")
+    return db_person
 
-def save_personas(insert_persons:model_person):
-    persons.append(insert_persons)
-    print (insert_persons)
-    return "Datos guardados"
-
-@person.post('/person/{person_id}', tags=["Personas"])
-
-def get_persona(person_id: str):
-    for person in persons:
-        if person.id== person_id:
-            return person
-    return "No existe el registro"
-
-@person.delete('/person/{person_id}', tags=["Personas"])
-
-def delete_persona(person_id: str):
-    for person in persons:
-        if person.id == person_id:
-            persons.remove(person)
-            return "Registro eliminado correctamente"
-    return "Registro no encontrado"
-
-@person.put('/person/{person_id}', tags=["Personas"])
-
-def update_persona(person_id: str, updateperson: model_person):
-    for person in persons:
-        if person.id == person_id:
-            person.nombre=updateperson.nombre
-            person.primer_apellido=updateperson.primer_apellido
-            person.segundo_apellido=updateperson.segundo_apellido
-            person.direccion=updateperson.direccion
-            person.telefono=updateperson.telefono
-            person.correo=updateperson.correo
-            person.sangre=updateperson.sangre
-            person.fecha_nacimiento=updateperson.fecha_nacimiento
-            person.estatus=updateperson.estatus
-            return "Registro actualizado"
+@person.delete("/person/{id}", response_model=schemas.persons.Person, tags=["Personas"])
+def delete_person(id: int, db: Session = Depends(get_db)):
+    db_person = cruds.persons.delete_person(db=db, id=id)
+    if db_person is None:
+        raise HTTPException(status_code=404, detail="Persona no existe, no se pudo eliminar")
+    return db_person
