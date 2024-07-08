@@ -6,7 +6,6 @@ from typing import List
 
 key=Fernet.generate_key()
 f = Fernet(key)
-
 user = APIRouter()
 
 models.users.Base.metadata.create_all(bind=config.db.engine)
