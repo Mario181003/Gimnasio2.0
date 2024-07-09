@@ -9,13 +9,13 @@ class RolBase(BaseModel):
     Fecha_Registro: datetime
     Fecha_Actualizacion: datetime
 
-class UserCreate(RolBase):
+class RolCreate(RolBase):
     pass
 
-class UserUpdate(RolBase):
+class RolUpdate(RolBase):
     pass
 
-class User(RolBase):
+class Rol(RolBase):
     ID: int
     class Config:
         orm_mode = True

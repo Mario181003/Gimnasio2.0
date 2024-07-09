@@ -7,8 +7,8 @@ import schemas
 def get_rol(db: Session, id: int):
     return db.query(models.roles.Rol).filter(models.roles.Rol.ID == id).first()
 
-def get_user_by_rol(db: Session, usuario: str):
-    return db.query(models.roles.Rol).filter(models.roles.Rol.Nombre == usuario).first()
+def get_rol_by_rol(db: Session, rol: str):
+    return db.query(models.roles.Rol).filter(models.roles.Rol.Nombre == rol).first()
 
 def get_roles(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.roles.Rol).offset(skip).limit(limit).all()
@@ -29,7 +29,7 @@ def update_rol(db: Session, id: int, user: schemas.roles.RolUpdate):
         db.refresh(db_user)
     return db_user
 
-def delete_person(db: Session, id: int):
+def delete_rol(db: Session, id: int):
     db_person = db.query(models.roles.Rol).filter(models.roles.Rol.ID == id).first()
     if db_person:
         db.delete(db_person)

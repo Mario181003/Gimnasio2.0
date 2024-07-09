@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from routes.user import user
 from routes.person import person
-from routes.rol import rol
+from routes.roles import rol
 # from routes.person import person
 
 app=FastAPI(
