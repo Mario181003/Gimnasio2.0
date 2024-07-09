@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, Enum
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, Enum, Date
 from sqlalchemy.dialects.mysql import LONGTEXT
 from sqlalchemy.orm import relationship
 from config.db import Base
@@ -18,7 +18,6 @@ class MyBlood(enum.Enum):
     OP = "O+"
     ON = "O-"
 
-
 class Person(Base):
     __tablename__ = "tbb_personas"
 
@@ -27,7 +26,7 @@ class Person(Base):
     Nombre = Column(String(80))
     Primer_Apellido = Column(String(80))
     Segundo_Apellido = Column(String(80))
-    Fecha_Nacimiento = Column(DateTime)
+    Fecha_Nacimiento = Column(Date)
     Fotografia = Column(String(100))
     Genero = Column(Enum(MyGender))
     Tipo_Sangre = Column(Enum(MyBlood))

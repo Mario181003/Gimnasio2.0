@@ -9,7 +9,6 @@ class MyEstatus(enum.Enum):
     Bloqueado = "Bloqueado"
     Suspendido = "Suspendido"
 
-
 class User(Base):
     __tablename__ = "tbb_usuarios"
 

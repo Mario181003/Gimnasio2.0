@@ -5,11 +5,10 @@ from datetime import datetime
 class UserBase(BaseModel):
     Persona_ID: int
     Nombre_Usuario: str
-    Nombre_Usuario: str
     Correo_electronico: str
     Contrasena: str
     Numero_Telefono: str
-    Estatus: enumerate
+    Estatus: str
     Fecha_Registro: datetime
     Fecha_Actualizacion: datetime
 
@@ -21,6 +20,12 @@ class UserUpdate(UserBase):
 
 class User(UserBase):
     ID: int
-    #owner_id: int clave foranea
+    Persona_ID: int
     class Config:
         orm_mode = True
+
+class UserLogin(BaseModel):
+    Nombre_Usuario: str
+    Correo_electronico: str
+    Contrasena: str
+    Numero_Telefono: str
