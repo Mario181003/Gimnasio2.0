@@ -33,4 +33,3 @@ class Person(Base):
     Estatus = Column(Boolean, default=False)
     Fecha_Registro = Column(DateTime)
     Fecha_Actualizacion = Column(DateTime)
-    #items = relationship("Item", back_populates="owner")

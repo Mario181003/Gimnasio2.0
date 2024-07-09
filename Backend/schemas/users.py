@@ -5,7 +5,7 @@ from datetime import datetime
 class UserBase(BaseModel):
     Persona_ID: int
     Nombre_Usuario: str
-    Correo_electronico: str
+    Correo_Electronico: str
     Contrasena: str
     Numero_Telefono: str
     Estatus: str

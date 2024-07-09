@@ -15,7 +15,7 @@ class User(Base):
     ID = Column(Integer, primary_key=True, index=True)
     Persona_ID = Column(Integer, ForeignKey("tbb_personas.ID"))
     Nombre_Usuario = Column(String(60))
-    Correo_electronico = Column(String(100))
+    Correo_Electronico = Column(String(100))
     Contrasena = Column(String(40))
     Numero_Telefono = Column(String(20))
     Estatus = Column(Enum(MyEstatus))
