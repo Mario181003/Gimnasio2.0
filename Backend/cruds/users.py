@@ -13,14 +13,8 @@ def get_users(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.users.User).offset(skip).limit(limit).all()
 
 def create_user(db: Session, user: schemas.users.UserCreate):
-    db_user = models.users.User(Persona_ID=user.Persona_ID, Nombre_Usuario=user.Nombre_Usuario,
-                                Correo_Electronico=user.Correo_Electronico,
-                                Contrasena=user.Contrasena,
-                                Numero_Telefono=user.Numero_Telefono,
-                                Contrasena=user.Contrasena,
-                                Estatus=user.Estatus,
-                                Fecha_Registro=user.Fecha_Registro,
-                                Fecha_Actualizacion=user.Fecha_Actualizacion
+    db_user = models.users.User(Persona_ID=user.Persona_ID, Nombre_Usuario=user.Nombre_Usuario, Correo_Electronico=user.Correo_Electronico, Contrasena=user.Contrasena, 
+                                Numero_Telefono=user.Numero_Telefono, Estatus=user.Estatus, Fecha_Registro=user.Fecha_Registro, Fecha_Actualizacion=user.Fecha_Actualizacion
                                 )
     db.add(db_user)
     db.commit()
