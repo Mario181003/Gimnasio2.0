@@ -9,13 +9,13 @@ class UsuarioRolBase(BaseModel):
     Fecha_Registro: datetime
     Fecha_Actualizacion: datetime
 
-class UserCreate(UsuarioRolBase):
+class UsuarioRolCreate(UsuarioRolBase):
     pass
 
-class UserUpdate(UsuarioRolBase):
+class UsuarioRolUpdate(UsuarioRolBase):
     pass
 
-class UsuarioRolBase(UsuarioRolBase):
+class UsuarioRol(UsuarioRolBase):
     ID: int
     Persona_ID: int
     Rol_ID: int
