@@ -14,24 +14,24 @@ def get_roles(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.roles.Rol).offset(skip).limit(limit).all()
 
 def create_rol(db: Session, rol: schemas.roles.RolCreate):
-    db_user = models.roles.Rol(Nombre = rol.Nombre, Descripcion = rol.Descripcion, Estatus = rol.Estatus, Fecha_Registro = rol.Fecha_Registro, Fecha_Actualizacion = rol.Fecha_Actualizacion)
-    db.add(db_user)
+    db_rol = models.roles.Rol(Nombre = rol.Nombre, Descripcion = rol.Descripcion, Estatus = rol.Estatus, Fecha_Registro = rol.Fecha_Registro, Fecha_Actualizacion = rol.Fecha_Actualizacion)
+    db.add(db_rol)
     db.commit()
-    db.refresh(db_user)
-    return db_user
+    db.refresh(db_rol)
+    return db_rol
 
-def update_rol(db: Session, id: int, user: schemas.roles.RolUpdate):
-    db_user = db.query(models.roles.Rol).filter(models.roles.Rol.ID == id).first()
-    if db_user:
-        for var, value in vars(user).items():
-            setattr(db_user, var, value) if value else None
+def update_rol(db: Session, id: int, rol: schemas.roles.RolUpdate):
+    db_rol = db.query(models.roles.Rol).filter(models.roles.Rol.ID == id).first()
+    if db_rol:
+        for var, value in vars(rol).items():
+            setattr(db_rol, var, value) if value else None
         db.commit()
-        db.refresh(db_user)
-    return db_user
+        db.refresh(db_rol)
+    return db_rol
 
 def delete_rol(db: Session, id: int):
-    db_person = db.query(models.roles.Rol).filter(models.roles.Rol.ID == id).first()
-    if db_person:
-        db.delete(db_person)
+    db_rol = db.query(models.roles.Rol).filter(models.roles.Rol.ID == id).first()
+    if db_rol:
+        db.delete(db_rol)
         db.commit()
-    return db_person
+    return db_rol
