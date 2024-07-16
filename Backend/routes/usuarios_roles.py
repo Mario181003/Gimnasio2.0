@@ -1,14 +1,14 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter,HTTPException, Depends
 from sqlalchemy.orm import Session
 from cryptography.fernet import Fernet
-import cruds.usuarios_roles, config.db, schemas.usuarios_roles, models.usuarios_roles
+import crud.usersrols, config.db, schemas.usersrols, models.usersrols
 from typing import List
 
-key=Fernet.generate_key()
+key = Fernet.generate_key()
 f = Fernet(key)
-usuario_rol = APIRouter()
 
-models.usuarios_roles.Base.metadata.create_all(bind=config.db.engine)
+userrol = APIRouter()
+models.usersrols.Base.metadata.create_all(bind=config.db.engine)
 
 def get_db():
     db = config.db.SessionLocal()
@@ -17,35 +17,40 @@ def get_db():
     finally:
         db.close()
 
-@usuario_rol.get("/usuarios_roles/", response_model=List[schemas.usuarios_roles.UsuarioRol], tags=["Usuarios Roles"])
-def read_usuario_rol(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
-    db_useriosRol= cruds.usuarios_roles.get_usuario_rol(db=db, skip=skip, limit=limit)
-    return db_useriosRol
+# Ruta para obtener todos los Rols
+@userrol.get('/usersrols/', response_model=List[schemas.usersrols.UserRol],tags=['Usuarios-Roles'])
+def read_rols(skip: int=0, limit: int=10, db: Session=Depends(get_db)):
+    db_userrols = crud.usersrols.get_usersrols(db=db,skip=skip, limit=limit)
+    return db_userrols
 
-# @usuario_rol.post("/user/{id}", response_model=schemas.users.User, tags=["Usuarios"])
-# def read_user(id: int, db: Session = Depends(get_db)):
-#     db_user= cruds.users.get_user(db=db, id=id)
-#     if db_user is None:
-#         raise HTTPException(status_code=404, detail="User not found")
-#     return db_user
+# Ruta para obtener un usuariorol por usuario ID
+@userrol.post("/usersrol/{usuario_id}/{rol_id}", response_model=schemas.usersrols.UserRol, tags=["Usuarios-Roles"])
+def get_userrol_by_ids(usuario_id: int, rol_id: int, db: Session = Depends(get_db)):
+    db_userrol = crud.usersrols.get_userrol_by_ids(db=db, usuario_id=usuario_id, rol_id=rol_id)
+    if db_userrol is None:
+        raise HTTPException(status_code=404, detail="User-Rol not found")
+    return db_userrol
 
-@usuario_rol.post("/usuarios_roles/", response_model=schemas.usuarios_roles.UsuarioRolCreate, tags=["Usuarios Roles"])
-def create_user(user: schemas.usuarios_roles.UsuarioRolCreate, db: Session = Depends(get_db)):
-    db_user = cruds.usuarios_roles.create_usuario_rol(db, usuario_rol=user.Nombre_Usuario)
-    if db_user:
-        raise HTTPException(status_code=400, detail="Usuario existente intenta nuevamente")
-    return cruds.usuarios_roles.create_usuario_rol(db=db, user=user)
+# Ruta para crear un usuario-rol
+@userrol.post('/usersrols/', response_model=schemas.usersrols.UserRol,tags=['Usuarios-Roles'])
+def create_rol(userrol: schemas.usersrols.UserRolCreate, db: Session=Depends(get_db)):
+    db_userrols = crud.usersrols.get_userrol_by_ids(db, usuario_id=userrol.Usuario_ID, rol_id=userrol.Rol_ID)
+    if db_userrols:
+        raise HTTPException(status_code=400, detail="User-Rol existente intenta nuevamente")
+    return crud.usersrols.create_userrol(db=db, userrol=userrol)
 
-# @user.put("/user/{id}", response_model=schemas.users.User, tags=["Usuarios"])
-# def update_user(id: int, user: schemas.users.UserUpdate, db: Session = Depends(get_db)):
-#     db_user = cruds.users.update_user(db=db, id=id, user=user)
-#     if db_user is None:
-#         raise HTTPException(status_code=404, detail="Usuario no existe, no actualizado")
-#     return db_user
+# Ruta para actualizar un usuario-rol
+@userrol.put("/usersrol/{usuario_id}/{rol_id}", response_model=schemas.usersrols.UserRol, tags=["Usuarios-Roles"])
+def update_userrol(usuario_id: int, rol_id: int, userrol:schemas.usersrols.UserRolUpdate, db: Session = Depends(get_db)):
+    db_userrol = crud.usersrols.update_userrol(db=db, usuario_id=usuario_id, rol_id=rol_id, userrol=userrol)
+    if db_userrol is None:
+        raise HTTPException(status_code=404, detail="User-Rol not found")
+    return db_userrol
 
-# @user.delete("/user/{id}", response_model=schemas.users.User, tags=["Usuarios"])
-# def delete_user(id: int, db: Session = Depends(get_db)):
-#     db_user = cruds.users.delete_user(db=db, id=id)
-#     if db_user is None:
-#         raise HTTPException(status_code=404, detail="Usuario no existe, no se pudo eliminar")
-#     return db_user
+# Ruta para eliminar un Rol
+@userrol.delete('/usersrols/{usuario_id}/{rol_id}', response_model=schemas.usersrols.UserRol,tags=['Usuarios-Roles'])
+def delete_rol(usuario_id: int, rol_id: int, db: Session=Depends(get_db)):
+    db_userrols = crud.usersrols.delete_userrol(db=db, usuario_id=usuario_id,rol_id=rol_id )
+    if db_userrols is None:
+        raise HTTPException(status_code=404, detail="User-Rol no existe, no se pudo eliminar ")
+    return db_userrols

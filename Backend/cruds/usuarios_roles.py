@@ -1,43 +1,53 @@
-import models.usuarios_roles
-import schemas.usuarios_roles
+import models.usersrols
+import schemas.usersrols
 from sqlalchemy.orm import Session
 import models, schemas
 
-# Funcion Correcta
-def get_usuario_rol(db: Session, id: int):
-    return db.query(models.usuarios_roles.Usuario_Rol).filter(models.usuarios_roles.Usuario_Rol.ID == id).first()
+# Busqueda por usuario_id y rol_id
+def get_userrol_by_ids(db: Session, usuario_id: int, rol_id: int):
+    return db.query(models.usersrols.UserRol).filter(
+        models.usersrols.UserRol.Usuario_ID == usuario_id,
+        models.usersrols.UserRol.Rol_ID == rol_id
+    ).first()
 
-# def get_user_by_usuario(db: Session, usuario: str):
-#     return db.query(models.users.User).filter(models.users.User.Nombre_Usuario == usuario).first()
+# Buscar todos los usuaurios-roless
+def get_usersrols(db:Session, skip: int=0, limit:int=10):
+    return db.query(models.usersrols.UserRol).offset(skip).limit(limit).all()
 
-# def get_users(db: Session, skip: int = 0, limit: int = 10):
-#     return db.query(models.users.User).offset(skip).limit(limit).all()
-
-# Funcion correcta
-def create_usuario_rol(db: Session, usuario_rol: schemas.usuarios_roles.UsuarioRolCreate):
-    db_usuario_rol = models.usuarios_roles.Usuario_Rol(Usuario_ID=usuario_rol.Usuario_ID, 
-                                                       Rol_ID=usuario_rol.Rol_ID, 
-                                                       Estatus=usuario_rol.Estatus, 
-                                                    Fecha_Registro=usuario_rol.Fecha_Registro, 
-                                                    Fecha_Actualizacion=usuario_rol.Fecha_Actualizacion
-                                )
-    db.add(db_usuario_rol)
+# Crear nuevo usuaurios-roles
+def create_userrol(db:Session, userrol: schemas.usersrols.UserRolCreate):
+    db_userrol = models.usersrols.UserRol(Usuario_ID=userrol.Usuario_ID, 
+                                          Rol_ID=userrol.Rol_ID,
+                                          Estatus=userrol.Estatus, 
+                                          Fecha_Registro=userrol.Fecha_Registro, 
+                                          Fecha_Actualizacion=userrol.Fecha_Actualizacion)
+    db.add(db_userrol)
     db.commit()
-    db.refresh(db_usuario_rol)
-    return db_usuario_rol
+    db.refresh(db_userrol)
+    return db_userrol
 
-# def update_user(db: Session, id: int, user: schemas.users.UserUpdate):
-#     db_user = db.query(models.users.User).filter(models.users.User.ID == id).first()
-#     if db_user:
-#         for var, value in vars(user).items():
-#             setattr(db_user, var, value) if value else None
-#         db.commit()
-#         db.refresh(db_user)
-#     return db_user
+# Actualizar un usuario-rol
+def update_userrol(db: Session, usuario_id: int, rol_id: int, userrol: schemas.usersrols.UserRolUpdate):
+    db_userrol = db.query(models.usersrols.UserRol).filter(
+        models.usersrols.UserRol.Usuario_ID == usuario_id,
+        models.usersrols.UserRol.Rol_ID == rol_id
+    ).first()
+    if db_userrol:
+        # Actualiza solo los campos deseados
+        db_userrol.Estatus = userrol.Estatus
+        db_userrol.Fecha_Registro = userrol.Fecha_Registro
+        db_userrol.Fecha_Actualizacion = userrol.Fecha_Actualizacion
 
-# def delete_user(db: Session, id: int):
-#     db_user = db.query(models.users.User).filter(models.users.User.ID == id).first()
-#     if db_user:
-#         db.delete(db_user)
-#         db.commit()
-#     return db_user
+        db.commit()
+        db.refresh(db_userrol)
+    return db_userrol
+
+# Eliminar un usuaurios-roles por id
+def delete_userrol(db:Session,  usuario_id: int, rol_id: int):
+    db_userrol = db.query(models.usersrols.UserRol).filter(models.usersrols.UserRol.Usuario_ID == usuario_id,
+                                                           models.usersrols.UserRol.Rol_ID == rol_id
+    ).first()
+    if db_userrol:
+        db.delete(db_userrol)
+        db.commit()
+    return db_userrol
