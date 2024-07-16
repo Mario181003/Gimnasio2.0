@@ -3,12 +3,11 @@ from sqlalchemy.dialects.mysql import LONGTEXT
 from sqlalchemy.orm import relationship
 from config.db import Base
 import enum
-class MyGender(enum.Enum):
+class MyGender(str, enum.Enum):
     Masculino = "Masculino"
     Femenino = "Femenino"
     Otro = "Otro"
-
-class MyBlood(enum.Enum):
+class MyBlood(str, enum.Enum):
     AP = "A+"
     AN = "A-"
     BP = "B+"
