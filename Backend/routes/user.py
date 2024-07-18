@@ -2,8 +2,11 @@ from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from cryptography.fernet import Fernet
+import json
 import cruds.users, config.db, schemas.users, models.users
 from typing import List
+from jwt_config import solicita_token
+from portadortoken import Portador
 
 key=Fernet.generate_key()
 f = Fernet(key)
