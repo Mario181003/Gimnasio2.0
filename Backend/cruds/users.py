@@ -9,6 +9,9 @@ def get_user(db: Session, id: int):
 def get_user_by_usuario(db: Session, usuario: str):
     return db.query(models.users.User).filter(models.users.User.Nombre_Usuario == usuario).first()
 
+def get_user_by_creedentials(db: Session, username: str, correo: str, telefono: str, password: str):
+    return db.query(models.)
+
 def get_users(db: Session, skip: int = 0, limit: int = 10):
     return db.query(models.users.User).offset(skip).limit(limit).all()
 
