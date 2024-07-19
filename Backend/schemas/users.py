@@ -26,6 +26,6 @@ class User(UserBase):
 
 class UserLogin(BaseModel):
     Nombre_Usuario: Optional[str] = None
-    Correo_electronico: Optional[str] = None
+    Correo_Electronico: Optional[str] = None
     Contrasena: str
     Numero_Telefono: Optional[str] = None
