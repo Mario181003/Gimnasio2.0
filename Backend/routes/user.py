@@ -57,7 +57,7 @@ def delete_user(id: int, db: Session = Depends(get_db)):
 @user.post('/login/', response_model=schemas.users.UserLogin, tags=["Usuarios Login"])
 def read_credentials(user: schemas.users.UserLogin, db: Session = Depends(get_db)):
     db_credentials = cruds.users.get_user_by_credentials(db, username=user.Nombre_Usuario,
-                                                          correo=user.Correo_electronico,
+                                                          correo=user.Correo_Electronico,
                                                           telefono=user.Numero_Telefono,
                                                           password=user.Contrasena)
     if db_credentials is None:
