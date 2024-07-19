@@ -1,0 +1,6 @@
+pip install uvicorn
+pip install fastapi uvicorn
+pip install sqlalchemy
+pip install pymysql
+pip install cryptography
+pip install pyjwt
