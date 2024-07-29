@@ -26,7 +26,7 @@ def read_rols(skip: int=0, limit: int=10, db: Session=Depends(get_db)):
 # Ruta para obtener un usuariorol por usuario ID
 @userrol.post("/usersrol/{usuario_id}/{rol_id}", response_model=schemas.usuarios_roles.UserRol, tags=["Usuarios-Roles"])
 def get_userrol_by_ids(usuario_id: int, rol_id: int, db: Session = Depends(get_db)):
-    db_userrol = cruds.usersrols.get_userrol_by_ids(db=db, usuario_id=usuario_id, rol_id=rol_id)
+    db_userrol = cruds.usuarios_roles.get_userrol_by_ids(db=db, usuario_id=usuario_id, rol_id=rol_id)
     if db_userrol is None:
         raise HTTPException(status_code=404, detail="User-Rol not found")
     return db_userrol
