@@ -1,8 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends
-from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from cryptography.fernet import Fernet
-import json
 import cruds.rutinas, config.db, schemas.rutinas, models.rutinas
 from typing import List
 
