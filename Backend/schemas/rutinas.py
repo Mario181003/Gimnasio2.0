@@ -1,14 +1,13 @@
 from typing import List, Union, Optional
 from pydantic import BaseModel
 from datetime import datetime
-from time import time
 
 class RutinasBase(BaseModel):
     Nombre: str
     Programa_Saludable_ID: int
     Fecha_Registro: datetime
     Fecha_Actualizacion: datetime
-    Tiempo_Aproximado: time
+    Tiempo_Aproximado: str
     Estatus: str
     Resultados_Esperados: str
 
