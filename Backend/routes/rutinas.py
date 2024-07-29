@@ -8,7 +8,7 @@ key=Fernet.generate_key()
 f = Fernet(key)
 rutina = APIRouter()
 
-models.rutinas.Base.metadata.creat_all(bind=config.db.engine)
+models.rutinas.Base.metadata.create_all(bind=config.db.engine)
 
 def get_db():
     db = config.db.SessionLocal()
