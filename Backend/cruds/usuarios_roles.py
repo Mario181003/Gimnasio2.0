@@ -44,8 +44,8 @@ def update_userrol(db: Session, usuario_id: int, rol_id: int, userrol: schemas.u
 
 # Eliminar un usuaurios-roles por id
 def delete_userrol(db:Session,  usuario_id: int, rol_id: int):
-    db_userrol = db.query(models.usersrols.UserRol).filter(models.usersrols.UserRol.Usuario_ID == usuario_id,
-                                                           models.usersrols.UserRol.Rol_ID == rol_id
+    db_userrol = db.query(models.usuarios_roles.UserRol).filter(models.usuarios_roles.UserRol.Usuario_ID == usuario_id,
+                                                           models.usuarios_roles.UserRol.Rol_ID == rol_id
     ).first()
     if db_userrol:
         db.delete(db_userrol)
