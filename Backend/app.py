@@ -4,6 +4,7 @@ from routes.person import person
 from routes.roles import rol
 from routes.usuarios_roles import userrol
 from routes.rutinas import rutina
+from routes.ejercicios_rutinas import ejcrtn
 
 app=FastAPI(
     title="Bull´s GYM",
@@ -14,5 +15,6 @@ app.include_router(person)
 app.include_router(rol)
 app.include_router(userrol)
 app.include_router(rutina)
+app.include_router(ejcrtn)
 
 print ("Hola bienvenido a mi backend")
