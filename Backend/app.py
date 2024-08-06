@@ -6,6 +6,9 @@ from routes.usuarios_roles import userrol
 from routes.rutinas import rutina
 from routes.ejercicios_rutinas import ejcrtn
 from routes.progra_salud import progra_salud
+from routes.instructors import instructor
+from routes.ejercicio import ejercicio
+
 
 app=FastAPI(
     title="Bull´s GYM",
@@ -18,5 +21,9 @@ app.include_router(userrol)
 app.include_router(rutina)
 app.include_router(ejcrtn)
 app.include_router(progra_salud)
+app.include_router(instructor)
+app.include_router(ejercicio)
+
+
 
 print ("Hola bienvenido a mi backend")

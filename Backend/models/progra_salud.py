@@ -14,7 +14,7 @@ class EstatusPrograma(str, enum.Enum):
     Cancelado = "Cancelado"
 
 class ProgramaSaludable(Base):
-    __tablename__ = "programas_saludables"
+    __tablename__ = "tbd_programas_saludables"
 
     ID = Column(Integer, primary_key=True, index=True)
     Nombre = Column(String(250))
