@@ -1,4 +1,5 @@
 [build]
+  command = "npm i"
   command = "npm run dev"
   command = "npm install netlify-cli -g"
   command = "netlify functions:create"
