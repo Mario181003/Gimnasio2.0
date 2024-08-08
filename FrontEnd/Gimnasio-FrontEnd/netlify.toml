@@ -1,8 +1,0 @@
-[build]
-  publish = "dist"  # Asegúrate de que esta ruta sea correcta
-  command = "npm run build"  # El comando que genera tu build
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
